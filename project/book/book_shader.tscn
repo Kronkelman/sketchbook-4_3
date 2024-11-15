@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfbaw5et247p4"]
+
+[ext_resource type="Material" uid="uid://bvqkkx35mrrle" path="res://book/book.tres" id="1_kwd48"]
+[ext_resource type="Script" path="res://book/mouse_pos.gd" id="2_l6cwj"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dc34i"]
+
+[node name="BookShader" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_dc34i")
+surface_material_override/0 = ExtResource("1_kwd48")
+
+[node name="MousePos" type="Node3D" parent="." node_paths=PackedStringArray("page")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.852716, 0, 0.925696)
+script = ExtResource("2_l6cwj")
+page = NodePath("../MeshInstance3D")
