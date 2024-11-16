@@ -6,6 +6,8 @@ uniform vec3 bg_color: source_color;
 
 uniform vec2 mouse_pos;
 uniform vec2 pivot_pos;
+uniform vec2 sticky_pos1;
+uniform vec2 sticky_pos2;
 
 
 vec2 midpoint(vec2 a, vec2 b) {
@@ -44,25 +46,31 @@ float dist_to_line(vec2 p, vec2 a, vec2 b) {
 	return distance(p, vec2(x, y));
 }
 
+vec2 set_length(vec2 p, float dist) {
+	return normalize(p) * dist; 
+}
+
+bool line_intersects_above_point(vec2 m, vec2 p, vec2 s) {
+	return (m.y - s.y)*(m.y - s.y) + (m.x - s.x)*(m.x - s.x) > (p.x - s.x)*(p.x - s.x) + (p.y - s.y)*(p.y - s.y); 
+}
+
 void fragment() {
-	vec2 mp = midpoint(mouse_pos, pivot_pos);
-	vec2 p1 = rotated_around_point(mouse_pos, mp, PI / 2.0);
+	vec2 target_pos = mouse_pos;
+	if (distance(sticky_pos1, target_pos) > distance(sticky_pos1, pivot_pos)) {
+		float dist = distance(sticky_pos1, pivot_pos);
+		target_pos = set_length(target_pos - sticky_pos1, dist) + sticky_pos1;
+	}
+	
+	if (distance(sticky_pos2, target_pos) > distance(sticky_pos2, pivot_pos)) {
+		float dist = distance(sticky_pos2, pivot_pos);
+		target_pos = set_length(target_pos - sticky_pos2, dist) + sticky_pos2;
+	}
+	
+	vec2 mp = midpoint(target_pos, pivot_pos);
+	vec2 p1 = rotated_around_point(target_pos, mp, PI / 2.0);
 	vec2 p2 = rotated_around_point(pivot_pos, mp, PI / 2.0);
-	
-	//if (is_right_of_line(UV, p1, p2)) {
-		//ALBEDO = back_color;
-	//} else {
-		//ALBEDO = front_color;
-	//}
-	
-	vec2 mp2 = midpoint(UV, pivot_pos);
-	vec2 k1 = rotated_around_point(UV, mp2, PI / 2.0);
-	vec2 k2 = rotated_around_point(pivot_pos, mp2, PI / 2.0);
-	
-	bool cond1 = two_point_line(0.0, k1, k2) < 1.0;
-	bool cond2 = distance(vec2(0.0, 1.0), UV) > 1.0;
-	
-	if (cond1) {
+
+	if (is_right_of_line(UV, p1, p2)) {
 		ALBEDO = back_color;
 	} else {
 		ALBEDO = front_color;
