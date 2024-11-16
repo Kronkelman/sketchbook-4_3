@@ -18,11 +18,13 @@ mesh = SubResource("PlaneMesh_dc34i")
 surface_material_override/0 = ExtResource("1_kwd48")
 
 [node name="MousePos" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.249491, 0, -0.0960589)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.391927, 0, 0.833441)
 
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 
 [node name="Sticky1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5225)
 
 [node name="Sticky2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.523263)

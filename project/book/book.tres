@@ -1,7 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bvqkkx35mrrle"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bvqkkx35mrrle"]
 
 [ext_resource type="Shader" path="res://book/page_turn.gdshader" id="1_ot5bp"]
-[ext_resource type="Texture2D" uid="uid://ca5ui4lmtonai" path="res://icon.svg" id="2_10qnb"]
+[ext_resource type="Texture2D" uid="uid://cncevxmn5khoi" path="res://book/journal1.png" id="2_kbiqo"]
+[ext_resource type="Texture2D" uid="uid://icicrxhwbq67" path="res://book/journal.png" id="3_w3wdt"]
+[ext_resource type="Texture2D" uid="uid://4qquqqqb200h" path="res://book/journal_2.png" id="4_m5chb"]
 
 [resource]
 render_priority = 0
@@ -9,8 +11,11 @@ shader = ExtResource("1_ot5bp")
 shader_parameter/front_color = Color(0.4251, 0.78, 0.273, 1)
 shader_parameter/back_color = Color(1, 0.9, 0, 1)
 shader_parameter/bg_color = Color(0.878431, 0.423529, 0.423529, 1)
-shader_parameter/mouse_pos = Vector2(0.283937, 0.642215)
+shader_parameter/alpha_clip = 0.5
+shader_parameter/mouse_pos = Vector2(0.711147, 0.722402)
 shader_parameter/pivot_pos = Vector2(1, 1)
-shader_parameter/sticky_pos1 = Vector2(0.5, 1)
-shader_parameter/sticky_pos2 = Vector2(0.5, 0)
-shader_parameter/back_tex = ExtResource("2_10qnb")
+shader_parameter/sticky_pos1 = Vector2(0.5, 0.76125)
+shader_parameter/sticky_pos2 = Vector2(0.5, 0.238369)
+shader_parameter/front_tex = ExtResource("4_m5chb")
+shader_parameter/back_tex = ExtResource("2_kbiqo")
+shader_parameter/bg_tex = ExtResource("3_w3wdt")

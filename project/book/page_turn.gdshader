@@ -10,6 +10,8 @@ uniform sampler2D front_tex: source_color;
 uniform sampler2D back_tex: source_color;
 uniform sampler2D bg_tex: source_color;
 
+uniform float alpha_clip;
+
 uniform vec2 mouse_pos;
 uniform vec2 pivot_pos;
 uniform vec2 sticky_pos1;
@@ -98,15 +100,26 @@ void fragment() {
 	
 	vec2 back_UV = shift_and_rotate(UV, target_pos, -2.0 * atan_normalized(target_pos - pivot_pos));
 	
-	vec3 front = texture(front_tex, UV).rgb;
-	vec3 back = texture(back_tex, back_UV).rgb;
-	vec3 bg = texture(bg_tex, UV).rgb;
+	vec4 front = texture(front_tex, UV);
+	vec4 back = texture(back_tex, back_UV);
+	vec4 bg = texture(bg_tex, UV);
+		
+	ALBEDO = front_color;
 	
-	if (is_right_of_line(UV, p1, p2)) {
-		ALBEDO = bg_color;
-	} else if (is_fold(UV, target_pos, pivot_pos)){
-		ALBEDO = back_color;
-	} else {
-		ALBEDO = front_color;
+	//if (is_right_of_line(UV, p1, p2)) {
+		//ALBEDO = bg_color;
+	//} else if (is_fold(UV, target_pos, pivot_pos)) {
+		//ALBEDO = back_color;
+	//}
+		
+	ALBEDO = bg.rgb;
+	ALPHA = bg.a;
+		
+	if (!is_right_of_line(UV, p1, p2) && is_fold(UV, target_pos, pivot_pos) && back.a > alpha_clip) {
+		ALBEDO = back.rgb;
+		ALPHA = back.a;
+	} else if (front.a > alpha_clip){
+		ALBEDO = front.rgb;
+		ALPHA = front.a;
 	}
 }
