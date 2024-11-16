@@ -12,6 +12,6 @@ mesh = SubResource("PlaneMesh_dc34i")
 surface_material_override/0 = ExtResource("1_kwd48")
 
 [node name="MousePos" type="Node3D" parent="." node_paths=PackedStringArray("page")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.852716, 0, 0.925696)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81851, 0, -0.212566)
 script = ExtResource("2_l6cwj")
 page = NodePath("../MeshInstance3D")
