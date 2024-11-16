@@ -1,14 +1,16 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bvqkkx35mrrle"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bvqkkx35mrrle"]
 
 [ext_resource type="Shader" path="res://book/page_turn.gdshader" id="1_ot5bp"]
+[ext_resource type="Texture2D" uid="uid://ca5ui4lmtonai" path="res://icon.svg" id="2_10qnb"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_ot5bp")
 shader_parameter/front_color = Color(0.4251, 0.78, 0.273, 1)
-shader_parameter/back_color = Color(0.88, 0.4224, 0.4224, 1)
-shader_parameter/bg_color = null
-shader_parameter/mouse_pos = Vector2(0.7064, 0.813567)
+shader_parameter/back_color = Color(1, 0.9, 0, 1)
+shader_parameter/bg_color = Color(0.878431, 0.423529, 0.423529, 1)
+shader_parameter/mouse_pos = Vector2(0.283937, 0.642215)
 shader_parameter/pivot_pos = Vector2(1, 1)
-shader_parameter/sticky_pos1 = Vector2(0, 1)
-shader_parameter/sticky_pos2 = Vector2(0, 0)
+shader_parameter/sticky_pos1 = Vector2(0.5, 1)
+shader_parameter/sticky_pos2 = Vector2(0.5, 0)
+shader_parameter/back_tex = ExtResource("2_10qnb")

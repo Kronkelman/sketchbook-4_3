@@ -1,8 +1,14 @@
 shader_type spatial;
 
+render_mode unshaded;
+
 uniform vec3 front_color: source_color;
 uniform vec3 back_color: source_color;
 uniform vec3 bg_color: source_color;
+
+uniform sampler2D front_tex: source_color;
+uniform sampler2D back_tex: source_color;
+uniform sampler2D bg_tex: source_color;
 
 uniform vec2 mouse_pos;
 uniform vec2 pivot_pos;
@@ -54,6 +60,26 @@ bool line_intersects_above_point(vec2 m, vec2 p, vec2 s) {
 	return (m.y - s.y)*(m.y - s.y) + (m.x - s.x)*(m.x - s.x) > (p.x - s.x)*(p.x - s.x) + (p.y - s.y)*(p.y - s.y); 
 }
 
+float angle_to_adjusted(vec2 a, vec2 b, float theta) {
+	return acos(dot(a, b) / (length(a) * length(b))) + theta;
+}
+
+float atan_normalized(vec2 p) {
+	float angle = atan(p.y, p.x);
+	angle = angle + 2.0 * PI;
+	return mod(angle, 2.0 * PI);
+}
+
+vec2 shift_and_rotate(vec2 p, vec2 o, float theta) {
+	return rotated_around_point(p - o, vec2(0.0, 0.0), theta);
+}
+
+bool is_fold(vec2 uv, vec2 m, vec2 p) {
+	vec2 shifted_UV = uv - m;
+	vec2 rotated_UV = rotated_around_point(shifted_UV, vec2(0.0, 0.0), -2.0 * atan_normalized(m - p));
+	return rotated_UV.x > 0.0 && rotated_UV.x < 1.0 && rotated_UV.y > -1.0 && rotated_UV.y < 0.0;
+}
+
 void fragment() {
 	vec2 target_pos = mouse_pos;
 	if (distance(sticky_pos1, target_pos) > distance(sticky_pos1, pivot_pos)) {
@@ -69,8 +95,16 @@ void fragment() {
 	vec2 mp = midpoint(target_pos, pivot_pos);
 	vec2 p1 = rotated_around_point(target_pos, mp, PI / 2.0);
 	vec2 p2 = rotated_around_point(pivot_pos, mp, PI / 2.0);
-
+	
+	vec2 back_UV = shift_and_rotate(UV, target_pos, -2.0 * atan_normalized(target_pos - pivot_pos));
+	
+	vec3 front = texture(front_tex, UV).rgb;
+	vec3 back = texture(back_tex, back_UV).rgb;
+	vec3 bg = texture(bg_tex, UV).rgb;
+	
 	if (is_right_of_line(UV, p1, p2)) {
+		ALBEDO = bg_color;
+	} else if (is_fold(UV, target_pos, pivot_pos)){
 		ALBEDO = back_color;
 	} else {
 		ALBEDO = front_color;

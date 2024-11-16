@@ -1,17 +1,28 @@
 [gd_scene load_steps=4 format=3 uid="uid://cfbaw5et247p4"]
 
+[ext_resource type="Script" path="res://book/book_shader.gd" id="1_g2tn3"]
 [ext_resource type="Material" uid="uid://bvqkkx35mrrle" path="res://book/book.tres" id="1_kwd48"]
-[ext_resource type="Script" path="res://book/mouse_pos.gd" id="2_l6cwj"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dc34i"]
 
-[node name="BookShader" type="Node3D"]
+[node name="BookShader" type="Node3D" node_paths=PackedStringArray("book", "mouse", "pivot", "sticky1", "sticky2")]
+script = ExtResource("1_g2tn3")
+book = NodePath("MeshInstance3D")
+mouse = NodePath("MousePos")
+pivot = NodePath("Pivot")
+sticky1 = NodePath("Sticky1")
+sticky2 = NodePath("Sticky2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_dc34i")
 surface_material_override/0 = ExtResource("1_kwd48")
 
-[node name="MousePos" type="Node3D" parent="." node_paths=PackedStringArray("page")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.412799, 0, 0.627134)
-script = ExtResource("2_l6cwj")
-page = NodePath("../MeshInstance3D")
+[node name="MousePos" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.249491, 0, -0.0960589)
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="Sticky1" type="Node3D" parent="."]
+
+[node name="Sticky2" type="Node3D" parent="."]
